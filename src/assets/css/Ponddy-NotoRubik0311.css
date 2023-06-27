@@ -1,0 +1,20 @@
+@font-face {
+    font-family: Ponddy-NotoRubik;
+    src: url("https://ponddychinese-resources.s3-us-west-2.amazonaws.com/fonts/PonddyEnglishFont/Ponddy-NotoRubik-Light.woff") format("woff");
+    font-weight: 300;
+}
+@font-face {
+    font-family: Ponddy-NotoRubik;
+    src: url("https://ponddychinese-resources.s3-us-west-2.amazonaws.com/fonts/PonddyEnglishFont/Ponddy-NotoRubik-Regular.woff") format("woff");
+    font-weight: 400;
+}
+@font-face {
+    font-family: Ponddy-NotoRubik;
+    src: url("https://ponddychinese-resources.s3-us-west-2.amazonaws.com/fonts/PonddyEnglishFont/Ponddy-NotoRubik-Medium.woff") format("woff");
+    font-weight: 500;
+}
+@font-face {
+    font-family: Ponddy-NotoRubik;
+    src: url("https://ponddychinese-resources.s3-us-west-2.amazonaws.com/fonts/PonddyEnglishFont/Ponddy-NotoRubik-Bold.woff") format("woff");
+    font-weight: 700;
+}

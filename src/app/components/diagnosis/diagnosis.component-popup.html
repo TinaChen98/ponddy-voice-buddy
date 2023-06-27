@@ -1,0 +1,40 @@
+<div>
+  <h1 mat-dialog-title>
+    {{data.row[0].value}}
+  </h1>
+  <div mat-dialog-content>
+    <div class="annotation">{{data.row[1].value}}</div>
+
+    <div class="description">
+      <div class="table">
+        <div class="table__title">
+          <ng-container *ngFor="let language of languages">
+            <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+          </ng-container>
+        </div>
+        <div [style.color]="data.row[2]?.color ? data.row[2]?.color : 'inherit'">{{ data.row[2].value }}</div>
+      </div>
+      <div class="table">
+        <div class="table__title">
+          <ng-container *ngFor="let language of languages">
+            <span *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</span>
+          </ng-container>
+        </div>
+        <div class="play-back">
+          <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback"
+              (click)="playPartData(data.row[3].value,''+data.id+3)"/>
+          <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+              (click)="stopPartData()"/>
+        </div>
+      </div>
+      <div class="table">
+        <div class="table__title">
+          <ng-container *ngFor="let language of languages">
+            <span *ngIf="language.id === 3 && language.lang === nowLanguage">{{ language.text }}</span>
+          </ng-container>
+        </div>
+        <div [style.color]="data.row[4]?.color ? data.row[4]?.color : 'inherit'">{{ data.row[4].value }}</div>
+      </div>
+    </div>
+  </div>
+</div>

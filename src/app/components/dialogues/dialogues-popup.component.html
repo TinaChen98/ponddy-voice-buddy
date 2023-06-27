@@ -1,0 +1,75 @@
+<div class="dialogues-popup">
+  <button mat-button mat-dialog-close class="close" (click)="close()">x</button>
+
+  <div class="title" mat-dialog-title>
+    <span class="title__text active">句子評分排行</span>
+    <!-- <span class="title__text">生詞評分排行</span> -->
+  </div>
+
+  <div mat-dialog-content class="distribution">
+    <ng-container *ngFor="let item of userRecordContent | keyvalue; let i=index">
+      <ng-container *ngIf="item?.value.status != 'skipped'; else skipped">
+        <div class="item">
+          <div>
+            <div class="btn btn-tts" (click)="playVoice(item?.value.scoring_diagnosis.gop_payload.text, item.key)" [hidden]="isAiPlayback && playUserRecordId === item.key">
+              <img class="image" src="assets/images/icons/play.svg">
+            </div>
+            <div class="btn btn-stop" (click)="stopAi()" [hidden]="!isAiPlayback" *ngIf="playUserRecordId === item.key">
+              <img class="image" src="assets/images/icons/stop-no.svg">
+            </div>
+          </div>
+
+          <div>
+            <div class="btn btn-play-record" (click)="playUserRecord(item.value.s3.user_voice)">
+              <img class="image" src="assets/images/icons/play-gray.svg">
+            </div>
+
+            <div class="level" [style.background-color]="item?.value.gop.score_gop <= 39 ? '#D64059' : (item?.value.gop.score_gop <= 69 ? '#F3A024' : '#3B9FBE')">
+              <span *ngIf="item?.value.gop.score_gop <= 39">Faild</span>
+              <span *ngIf="item?.value.gop.score_gop > 39 && item?.value.gop.score_gop <= 69">OK</span>
+              <span *ngIf="item?.value.gop.score_gop >= 70">Good</span>
+            </div>
+          </div>
+
+          <div class="pinyins">
+            <span
+              *ngFor="let row of item?.value.gop.table_structure.data;let i = index"
+              class="pinyin out" [style.color]="row[2].color ? row[2].color : 'inherit'">
+                <span [id]="'text4y_'+i" >{{ row[0].value | lowercase }}</span>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+
+
+      <ng-template #skipped>
+        <div class="item">
+          <div>
+            <div class="btn btn-tts" (click)="playVoice(item.value.content, item.key)" [hidden]="isAiPlayback && playUserRecordId === item.key">
+              <img class="image" src="assets/images/icons/play.svg">
+            </div>
+            <div class="btn btn-stop" (click)="stopAi()" [hidden]="!isAiPlayback" *ngIf="playUserRecordId === item.key">
+              <img class="image" src="assets/images/icons/stop-no.svg">
+            </div>
+          </div>
+
+          <div>
+            <div class="btn btn-disabled">
+              <img class="image" src="assets/images/icons/play-gray.svg">
+            </div>
+
+            <div class="level" style="background-color: #8b8b8b">
+              <span>skipped</span>
+            </div>
+          </div>
+
+          <div class="pinyins">
+            <span class="pinyin out" style="opacity: 0.5;">
+                <span>{{ item.value.content }}</span>
+            </span>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

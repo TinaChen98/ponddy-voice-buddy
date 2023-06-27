@@ -1,0 +1,30 @@
+.modal-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(1px);
+  pointer-events: all;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loading-wrapper {
+    text-align: center;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .text {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #576168;
+    }
+  }
+}

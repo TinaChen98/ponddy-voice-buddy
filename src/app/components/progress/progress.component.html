@@ -1,0 +1,47 @@
+<div class="progress-wrapper">
+  <div class="step" [class.active]="activeStep === 0">
+    <div class="icon">
+      <img [hidden]="activeStep === 0" src="assets/images/icons/input-logo.svg" />
+      <img [hidden]="activeStep !== 0" src="assets/images/icons/input-logo-active.svg" />
+    </div>
+    <div class="text">
+      Input your sentence
+    </div>
+  </div>
+
+  <img class="separator" src="assets/images/icons/separator.svg" alt="separator" />
+
+  <div class="step" [class.active]="activeStep === 1">
+    <div class="icon">
+      <img [hidden]="activeStep === 1" src="assets/images/icons/speak-logo.svg" />
+      <img [hidden]="activeStep !== 1" src="assets/images/icons/speak-logo-active.svg" />
+    </div>
+    <div class="text">
+      Try speak it loud
+    </div>
+  </div>
+
+  <img class="separator" src="assets/images/icons/separator.svg" alt="separator" />
+
+  <div class="step" [class.active]="activeStep === 2">
+    <div class="icon">
+      <img [hidden]="activeStep === 2" src="assets/images/icons/result-logo.svg" />
+      <img [hidden]="activeStep !== 2" src="assets/images/icons/result-logo-active.svg" />
+    </div>
+    <div class="text">
+      Simple Scoring
+    </div>
+  </div>
+
+  <img class="separator" src="assets/images/icons/separator.svg" alt="separator" />
+
+  <div class="step" [class.active]="activeStep === 3">
+    <div class="icon">
+      <img [hidden]="activeStep === 3" src="assets/images/icons/diagnosis-logo.svg" />
+      <img [hidden]="activeStep !== 3" src="assets/images/icons/diagnosis-logo-active.svg" />
+    </div>
+    <div class="text">
+      Ponddy Voice Diagnosis
+    </div>
+  </div>
+</div>

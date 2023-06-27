@@ -1,0 +1,49 @@
+<div class="speak-popup">
+  <button mat-button mat-dialog-close class="close">x</button>
+
+  <ng-container *ngIf="type === 'highScore'; else openVoice">
+    <h1 mat-dialog-title>
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </h1>
+
+    <div mat-dialog-content>
+      <ul>
+        <ng-container *ngFor="let language of languages">
+          <li *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</li>
+          <li *ngIf="language.id === 3 && language.lang === nowLanguage">{{ language.text }}</li>
+          <li *ngIf="language.id === 4 && language.lang === nowLanguage">{{ language.text }}</li>
+          <li *ngIf="language.id === 5 && language.lang === nowLanguage">{{ language.text }}</li>
+          <li *ngIf="language.id === 6 && language.lang === nowLanguage">{{ language.text }}</li>
+          <li *ngIf="language.id === 7 && language.lang === nowLanguage">{{ language.text }}</li>
+        </ng-container>
+      </ul>
+    </div>
+  </ng-container>
+
+  <ng-template #openVoice>
+    <h1 mat-dialog-title>
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 8 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </h1>
+
+    <div mat-dialog-content>
+      <div class="distribution">
+        <ng-container *ngFor="let language of languages">
+          <span *ngIf="language.id === 9 && language.lang === nowLanguage">{{ language.text }}</span>
+        </ng-container>
+      </div>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/2693767?hl=zh-Hant" target="_blank">Chrome</a></li>
+        <li><a href="https://support.microsoft.com/zh-tw/topic/%E5%9C%A8-windows-10-%E4%B8%AD%E9%96%8B%E5%95%9F%E9%BA%A5%E5%85%8B%E9%A2%A8%E7%9A%84%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E5%AD%98%E5%8F%96%E6%AC%8A%E9%99%90-94991183-f69d-b4cf-4679-c98ca45f577a" target="_blank">Microsoft Edge</a></li>
+        <li><a href="https://support.mozilla.org/zh-TW/kb/how-manage-your-camera-and-microphone-permissions" target="_blank">Firefox</a></li>
+        <li><a href="https://support.google.com/android/answer/9431959?hl=zh-Hant" target="_blank">Android</a></li>
+        <li><a href="https://support.apple.com/zh-tw/guide/mac-help/mchla1b1e1fe/mac" target="_blank">MacOS</a></li>
+        <li><a href="https://support.apple.com/zh-tw/HT210896" target="_blank">iPadOS</a></li>
+        <li><a href="https://support.apple.com/zh-tw/HT203792" target="_blank">iOS</a></li>
+      </ul>
+    </div>
+  </ng-template>
+</div>

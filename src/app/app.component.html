@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="widget-wrapper">
+  <audio controls id="ai-audio-player">
+    <source *ngIf="aiAudioSource" [src]="aiAudioSource" />
+  </audio>
+  <audio controls id="user-audio-player">
+    <source *ngIf="userAudioSource" [src]="userAudioSource" />
+  </audio>
+  <audio controls id="data-part-audio-player">
+    <source *ngIf="partDataAudioSource" [src]="partDataAudioSource" />
+  </audio>
+
+  <app-home (homeState)="changeHomeState($event)" *ngIf="homeState"></app-home>
+
+  <app-step-container *ngIf="!homeState">
+    <app-input *ngIf="activeStep === 0"></app-input>
+    <app-speak *ngIf="activeStep === 1"></app-speak>
+    <app-diagnosis *ngIf="activeStep === 2"></app-diagnosis>
+    <app-dialogues *ngIf="activeStep === 4"></app-dialogues>
+    <!-- <app-result *ngIf="activeStep === 3"></app-result> -->
+  </app-step-container>
+
+  <app-loading></app-loading>
+  <app-error></app-error>
+</div>

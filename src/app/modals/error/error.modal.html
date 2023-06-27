@@ -1,0 +1,9 @@
+<div class="modal-wrapper" *ngIf="isError">
+  <div class="error-wrapper">
+    <!-- TODO Error code  -->
+    <div *ngIf="errorCode === 'vad01' || errorCode === 'e01'" class="error-title">No sound recorded</div>
+    <div *ngIf="errorCode != 'vad01' && errorCode != 'e01'" class="error-title">Something went wrong...</div>
+    <div class="error-text">{{ errorMsg }}</div>
+    <app-button [isFilled]="true" (click)="dismiss()">Try Again</app-button>
+  </div>
+</div>

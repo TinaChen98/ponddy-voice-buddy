@@ -1,0 +1,108 @@
+.header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  margin: 0;
+  background-color: white;
+  border-bottom: 1px solid #EAEBEC;
+
+  &__logo {
+    padding-left: 20px;
+    @media screen and (max-width: 768px) {
+      padding-left: 10px;
+    }
+  }
+
+  &__user {
+    padding-right: 20px;
+
+    @media screen and (max-width: 768px) {
+      padding-right: 10px;
+    }
+
+    .user {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 165px;
+      max-height: 48px;
+      padding: 6px 12px 6px 6px;
+      background: #FFFFFF;
+      border: 1px solid #DCDFE6;
+      border-radius: 25px;
+
+      @media screen and (max-width: 768px) {
+        min-width: 148px;
+        padding: 6px;
+      }
+
+      &__img {
+        border-radius: 25px;
+        width: 36px;
+        @media screen and (max-width: 768px) {
+          width: 32px;
+        }
+      }
+
+      &__name {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #606266;
+      }
+
+      &.lang {
+        min-width: 165px;
+        padding: 6px 12px 6px 24px;
+
+        @media screen and (max-width: 768px) {
+          min-width: 148px;
+          padding: 6px 12px;
+        }
+      }
+    }
+  }
+}
+
+
+.border-b {
+  border-bottom: 1px solid #E4E7ED;
+}
+
+.user-menu {
+  padding: 16px 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #606266;
+  letter-spacing: 1px;
+}
+
+.static-link-tick {
+  display: inline-flex;
+  width: 20px;
+  justify-content: center;
+}
+
+::ng-deep.mat-menu-panel {
+  width: 188px;
+  margin-top: 6px;
+  margin-right: 10px;
+  min-width: auto;
+
+  &.menu-language {
+    max-width: 120px;
+  }
+
+  .mat-menu-item {
+    height: auto;
+  }
+
+}

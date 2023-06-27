@@ -1,0 +1,75 @@
+::ng-deep.mat-dialog-container {
+  padding: 0;
+  border-radius: 12px;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
+
+  .speak-popup {
+    padding: 12px 24px;
+    position: relative;
+    cursor: auto;
+    max-width: 500px;
+
+    h1 {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: #576168;
+      margin: 0;
+      padding: 24px 0 8px 0;
+      text-align: center;
+
+      @media screen and (max-width: 768px) {
+        padding: 16px 0 6px 0;
+        font-size: 18px;
+      }
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border-radius: 25px;
+      background-color: white;
+      color: #969CA0;
+      font-size: 20px;
+      border: none;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    .distribution {
+      color: #969CA0;
+      padding-bottom: 8px;
+      font-size: 16px;
+      line-height: 26px;
+      max-width: 300px;
+
+      @media screen and (max-width: 768px) {
+        font-size: 15px;
+      }
+    }
+
+    ul {
+      padding-inline-start: 20px;
+      color: #969CA0;
+      line-height: 24px;
+      margin: 0;
+      padding-bottom: 12px;
+      font-size: 15px;
+      text-align: left;
+
+      a {
+        color: #3B9FBE;
+        text-decoration: none;
+
+        &:hover {
+          color: #1B7892;
+        }
+      }
+    }
+  }
+}
+

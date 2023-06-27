@@ -1,0 +1,181 @@
+::ng-deep.mat-dialog-container {
+  padding: 0;
+  border-radius: 12px;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
+
+  .mat-dialog-actions {
+    margin-bottom: 0;
+  }
+
+  .input-dialogues-popup {
+    padding: 0 24px;
+    position: relative;
+    min-width: 500px;
+    cursor: auto;
+
+    @media screen and (max-width: 768px) {
+      min-width: auto;
+    }
+
+
+    h1 {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: #576168;
+      margin: 0;
+      padding: 24px 0 16px 0;
+
+      @media screen and (max-width: 768px) {
+        padding: 36px 0 0 0;
+        font-size: 18px;
+      }
+    }
+
+    .topic {
+      position: absolute;
+      top: 12px;
+      left: 24px;
+      border-radius: 25px;
+      background-color: #969CA0;
+      color: white;
+      font-size: 14px;
+      border: none;
+      padding: 0 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border-radius: 25px;
+      background-color: white;
+      color: #969CA0;
+      font-size: 20px;
+      border: none;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    .introduction {
+      border-top: 1px dashed #eaecec;
+      margin-top: 24px;
+      padding: 12px;
+      text-align: left;
+      color: #969ca0;
+      display: inline-block;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 24px;
+
+      .active {
+        font-size: 13px;
+        color: #6ACFED;
+        text-decoration: underline;
+      }
+    }
+
+    .scenarios {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0;
+
+      &__text {
+        display: inline-block;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 26px;
+        letter-spacing: 0.5px;
+        color: #969ca0;
+        background: #fbfcfc;
+        padding: 4px 16px;
+        border-radius: 20px;
+        max-width: 60%;
+      }
+
+      &__icon {
+        max-width: 36px;
+        width: 100%;
+      }
+
+      &__ai {
+        text-align: left;
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+
+        &.border {
+          padding-left: 6px;
+          border-left: 4px solid #6ACFED;
+        }
+      }
+
+      &__human {
+        text-align: left;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        margin-bottom: 12px;
+
+        &.border {
+          padding-right: 6px;
+          border-right: 4px solid #6ACFED;
+        }
+      }
+    }
+
+    img {
+      border-radius: 8px;
+       width: 100%;
+       max-width: 400px;
+    }
+
+    .btn-b {
+      display: inline-block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .btn {
+      position: absolute;
+      right: 12px;
+      cursor: pointer;
+      border-radius: 25px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      margin-right: 12px;
+      box-shadow: 0 0 8px rgba(45, 57, 66, 0.2);
+
+      .image {
+        width: 20px;
+      }
+    }
+
+    .btn-tts {
+      background-color: #6ACFED;
+    }
+
+    .btn-stop {
+      background-color: #ea4b65;
+    }
+
+    .level {
+      font-size: 14px;
+      padding: 12px 0 8px 0;
+    }
+
+    .annotation {
+      text-align: left;
+      padding-left: 8px;
+      margin-top: -4px;
+      font-size: 12px;
+      opacity: 0.4;
+    }
+  }
+}
+

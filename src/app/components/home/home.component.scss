@@ -1,0 +1,44 @@
+.home-wrapper {
+  display: flex;
+  align-items: center;
+  height: 70vh;
+  @media screen and (max-width: 768px) {
+    display: block;
+    padding: 0 20px;
+  }
+
+  .image {
+    margin-right: 64px;
+    @media screen and (max-width: 768px) {
+      margin: 0;
+      text-align: center;
+    }
+  }
+  .title {
+    max-width: 300px;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 59px;
+    letter-spacing: 1px;
+    color: #2D3942;
+    padding-bottom: 16px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 38px;
+      line-height: 48px;
+    }
+  }
+  .title-en {
+    max-width: 400px;
+    font-weight: 500;
+  }
+
+  .description {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    letter-spacing: 1px;
+    color: #2D3942;
+    padding-bottom: 32px;
+  }
+}

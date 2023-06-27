@@ -1,0 +1,25 @@
+<div class="home-wrapper">
+  <div class="image">
+    <img src="assets/images/home-hello.svg">
+  </div>
+  <div>
+    <ng-container *ngFor="let language of languages">
+      <div *ngIf="language.id === 1 && language.lang === nowLanguage" class="title" [class.title-en]="nowLanguage === 'en'">
+        <span>{{ language.text }}</span>
+      </div>
+    </ng-container>
+    <div class="description">
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </div>
+
+    <app-button [isFilled]="true" [isWidthFull]="true" (click)="loginState('customized')">
+      <span>客製化教材</span>
+    </app-button>
+    <hr style="border: 1px solid transparent;">
+    <app-button [isFilled]="true" [isWidthFull]="true" (click)="loginState('dialogues')">
+      <span>主題情境對話</span>
+    </app-button>
+  </div>
+</div>

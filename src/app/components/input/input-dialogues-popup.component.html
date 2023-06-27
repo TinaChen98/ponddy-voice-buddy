@@ -1,0 +1,81 @@
+<div class="input-dialogues-popup" *ngIf="dialoguesScenarios">
+  <h1 mat-dialog-title>
+    <!-- <ng-container *ngFor="let language of languages">
+      <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+    </ng-container> -->
+    <span *ngIf="nowLanguage === 'en'">{{ dialoguesScenarios.name_en }}</span>
+    <span *ngIf="nowLanguage === 'zh-TW'">{{ dialoguesScenarios.name_cht }}</span>
+  </h1>
+
+  <div class="topic">
+    <span *ngIf="nowLanguage === 'en'">{{ dialoguesTopic.name_en }}</span>
+    <span *ngIf="nowLanguage === 'zh-TW'">{{ dialoguesTopic.name_cht }}</span>
+  </div>
+
+  <button mat-button mat-dialog-close (click)="close()" class="close">x</button>
+
+  <div mat-dialog-content>
+    <div>
+      <img [src]="dialoguesScenarios.photo">
+    </div>
+
+    <div class="introduction" id="introduction">
+      <div [class.active]="clickContentId === 'introduction'">{{dialoguesScenarios.introduction_en}}</div>
+      <div>{{dialoguesScenarios.introduction_cht}}</div>
+    </div>
+    <div class="scenarios">
+      <div>
+        <ng-container *ngFor="let diaglog of dialoguesScenarios.diaglogs; let i=index">
+          <ng-container *ngIf="diaglog.role === 'AI'; else human">
+            <div [id]="diaglog.id" class="scenarios__ai" [class.border]="clickContentId === diaglog.id">
+              <div class="scenarios__icon"><img src="./assets/images/icons/ai.svg"></div>
+              <div class="scenarios__text">
+                {{diaglog.content}}
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #human>
+            <div [id]="diaglog.id" class="scenarios__human" [class.border]="clickContentId === diaglog.id">
+              <div class="scenarios__text">
+                {{diaglog.content}}
+              </div>
+              <div class="scenarios__icon"><img src="./assets/images/icons/human.svg"></div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+
+  <div mat-dialog-actions>
+    <div class="btn-b">
+      <app-button [isFilled]="true" [isSmallBtn]="true" (click)="clickStart()">
+        <ng-container *ngFor="let language of languages">
+          <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+        </ng-container>
+      </app-button>
+    </div>
+
+    <ng-container *ngIf="!clickClose; else stop">
+      <div class="btn btn-tts" (click)="start()">
+        <img class="image" src="assets/images/icons/play.svg">
+      </div>
+    </ng-container>
+
+    <ng-template #stop>
+      <ng-container *ngIf="!isrestart; else restart">
+        <div class="btn btn-stop" (click)="close()">
+          <img class="image" src="assets/images/icons/stop-no.svg">
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #restart>
+      <div class="btn btn-tts" (click)="clickRestart()">
+        <img class="image" src="assets/images/icons/play-restart.svg">
+      </div>
+    </ng-template>
+  </div>
+</div>

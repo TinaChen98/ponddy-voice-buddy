@@ -1,0 +1,96 @@
+::ng-deep.mat-dialog-container {
+  padding: 0;
+  border-radius: 12px;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
+
+  .practice {
+    padding: 12px 24px;
+    position: relative;
+    min-width: 500px;
+    cursor: auto;
+
+    @media screen and (max-width: 768px) {
+      min-width: auto;
+    }
+
+
+    h1 {
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: #576168;
+      margin: 0;
+      padding: 24px 0 8px 0;
+      @media screen and (max-width: 768px) {
+        padding: 12px 0 8px 0;
+      }
+    }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      border-radius: 25px;
+      background-color: white;
+      color: #969CA0;
+      font-size: 20px;
+      border: none;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    .top {
+      position: relative;
+      .del-text {
+        position: absolute;
+        z-index: 1;
+        color: #969CA0;
+        top: 4px;
+        right: 3%;
+        padding: 0px 6px;
+        border-radius: 25px;
+        font-size: 14px;
+        cursor: pointer;
+
+        @media screen and (max-width: 415px) {
+          right: 0;
+        }
+      }
+
+      textarea {
+        font-size: 16px;
+        padding: 8px;
+        padding-right: 24px;
+        width: 90%;
+        letter-spacing: .5px;
+      }
+    }
+
+    .btn-b {
+      display: inline-block;
+      margin-top: 8px;
+
+      .disable {
+        pointer-events: none;
+      }
+    }
+
+    .level {
+      font-size: 14px;
+      padding: 12px 0 8px 0;
+    }
+
+    .annotation {
+      text-align: left;
+      padding-left: 8px;
+      margin-top: -4px;
+      font-size: 12px;
+      opacity: 0.4;
+    }
+  }
+}
+

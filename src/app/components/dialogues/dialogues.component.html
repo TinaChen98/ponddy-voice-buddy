@@ -1,0 +1,206 @@
+<div class="dialogues" *ngIf="dialoguesTopic">
+  <div class="topic">
+    <span *ngIf="nowLanguage === 'en'">{{ dialoguesTopic.name_en }}</span>
+    <span *ngIf="nowLanguage === 'zh-TW'">{{ dialoguesTopic.name_cht }}</span>
+  </div>
+
+  <div class="title">
+    <div class="title__text">
+      <div>{{ dialoguesScenarios.name_en }}</div>
+      <div>{{ dialoguesScenarios.name_cht }}</div>
+    </div>
+
+    <div class="title__button" (click)="reset()"></div>
+  </div>
+
+  <div class="cont">
+    <div id="photo">
+      <img [src]="dialoguesScenarios.photo">
+    </div>
+
+    <div class="scenarios">
+      <div>
+        <ng-container *ngFor="let diaglog of dialoguesScenarios.diaglogs; let i=index">
+          <ng-container *ngIf="diaglog.role === 'AI'; else human">
+
+            <div [id]="diaglog.id" class="scenarios__ai">
+              <div class="hr" *ngIf="clickContentId === diaglog.id">
+                <div class="active"></div>
+              </div>
+
+              <div>
+                <div class="scenarios__ai__item" (click)="clickContent(diaglog.id, diaglog.content, true, i)">
+                  <div class="scenarios__icon">
+                    <div class="scenarios__icon__ai">
+                      <img src="./assets/images/icons/ai.svg">
+                    </div>
+                  </div>
+                  <div class="scenarios__text">
+                    <div>{{diaglog.content}}</div>
+                  </div>
+                </div>
+
+                <div class="scenarios__ai__item" *ngIf="clickContentId === diaglog.id">
+                  <!-- 播放 TTS -->
+                  <div class="btn btn-tts" (click)="playVoice(diaglog.id, diaglog.content, true)" [hidden]="isAiPlayback">
+                    <img class="image" src="assets/images/icons/play.svg">
+                  </div>
+                  <div class="btn btn-stop" (click)="stopAi()" [hidden]="!isAiPlayback">
+                    <img class="image" src="assets/images/icons/stop-no.svg">
+                  </div>
+
+                  <!-- 播放速度 -->
+                  <div class="play-rate">
+                    <img class="play-rate__icon" src="assets/images/icons/icon-fast-foward.svg">
+                    <input id="rate" type="range" min="0.7" max="1.3" step="0.1" value="1" (change)="playRate()" />
+                    <span class="play-rate__text">x{{ nowRate }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #human>
+            <div [id]="diaglog.id" class="scenarios__human">
+              <div style="width: 100%; position: relative;">
+                <!-- 評分中 -->
+                <ng-container *ngIf="userRecordContent[diaglog.id]?.status === 'analyzing'">
+                  <div class="scenarios__loading">
+                    <div class="loading-wrapper">
+                      <img src="assets/images/loading.gif" alt="loading" />
+                      <div class="text"> Analyzing, please wait ...</div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="scenarios__human__item" (click)="clickContent(diaglog.id, diaglog.content, false, i)">
+                  <!-- 內容顯示 -->
+                  <div class="scenarios__text">
+                    <!-- 評分錯誤 -->
+                    <ng-container *ngIf="userRecordContent[diaglog.id]?.status === 'error'">
+                      <div class="scenarios__text__error">
+                        {{userRecordContent[diaglog.id]?.errorMessage}}
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="userRecordContent[diaglog.id] != undefined; else diaglogContent">
+                      <div class="pinyins" *ngIf="!userRecordContent[diaglog.id].status; else diaglogContentSkipped" >
+                        <span
+                          *ngFor="let row of userRecordContent[diaglog.id]?.gop.table_structure.data;let i = index"
+                          class="pinyin out" [style.color]="row[2].color ? row[2].color : 'inherit'">
+                            <span [id]="'text4y_'+i" >{{ row[0].value | lowercase }}</span>
+                        </span>
+                      </div>
+                    </ng-container>
+                    <ng-template #diaglogContentSkipped>
+                      <ng-container *ngIf="userRecordContent[diaglog.id].status === 'skipped'; else diaglogContent">
+                        <span style="color: #d0d7dd;">
+                          {{diaglog.content}}
+                        </span>
+                      </ng-container>
+
+                    </ng-template>
+                    <ng-template #diaglogContent>
+                      <span>
+                        {{diaglog.content}}
+                      </span>
+                    </ng-template>
+                  </div>
+
+                  <div class="scenarios__icon">
+                    <div class="scenarios__icon__human">
+                      <img src="./assets/images/icons/human.svg">
+                    </div>
+                    <ng-container *ngIf="userRecordContent[diaglog.id]?.status; else level">
+                      <ng-container *ngIf="userRecordContent[diaglog.id]?.status === 'skipped'">
+                        <div class="scenarios__icon__level" style="background-color: #8b8b8b">
+                          <span>skipped</span>
+                        </div>
+                      </ng-container>
+
+                      <ng-container *ngIf="userRecordContent[diaglog.id]?.status === 'error'">
+                        <div class="scenarios__icon__level" style="color: #ea4b65;border: 1px solid;">
+                          <span>Retry</span>
+                        </div>
+                      </ng-container>
+
+                      <!-- <ng-template #loading>
+                        <div class="scenarios__icon__loading">
+                          <img src="assets/images/loading.gif" alt="loading" />
+                        </div>
+                      </ng-template> -->
+                    </ng-container>
+
+                    <ng-template #level>
+                      <ng-container *ngIf="userRecordContent[diaglog.id]?.gop.score_gop;">
+                        <div class="scenarios__icon__level" [style.background-color]="userRecordContent[diaglog.id]?.gop.score_gop <= 39 ? '#D64059' : (userRecordContent[diaglog.id]?.gop.score_gop <= 69 ? '#F3A024' : '#3B9FBE')">
+                          <span *ngIf="userRecordContent[diaglog.id]?.gop.score_gop <= 39">Faild</span>
+                          <span *ngIf="userRecordContent[diaglog.id]?.gop.score_gop > 39 && userRecordContent[diaglog.id]?.gop.score_gop <= 69">OK</span>
+                          <span *ngIf="userRecordContent[diaglog.id]?.gop.score_gop >= 70">Good</span>
+                        </div>
+                      </ng-container>
+
+
+
+                    </ng-template>
+
+                  </div>
+                </div>
+
+                <div class="scenarios__human__item" *ngIf="clickContentId === diaglog.id">
+                  <!-- 播放 TTS -->
+                  <div class="btn btn-tts" (click)="playVoice(diaglog.id, diaglog.content, false)" [hidden]="isAiPlayback">
+                    <img class="image" src="assets/images/icons/play.svg">
+                  </div>
+                  <div class="btn btn-stop" (click)="stopAi()" [hidden]="!isAiPlayback">
+                    <img class="image" src="assets/images/icons/stop-no.svg">
+                  </div>
+
+                  <!-- 播放 錄音 -->
+                  <div class="btn btn-play-record" (click)="score(diaglog.content, diaglog.ipa, i)" [hidden]="!playUserRecordStart">
+                    <img class="image" src="assets/images/icons/play-gray.svg">
+                  </div>
+
+                  <!-- 跳過 -->
+                  <div class="btn btn-play-record" (click)="skipped(diaglog.id, diaglog.content, i)" [hidden]="playUserRecordStart">
+                    <img class="image" src="assets/images/icons/skipped-record.svg">
+                  </div>
+
+                  <!-- 錄音 -->
+                  <div class="btn btn-record" [hidden]="isRecording" (click)="record()">
+                    <img class="image" src="assets/images/icons/record.svg">
+                  </div>
+                  <div class="btn btn-stop"  [hidden]="!isRecording" (click)="stopRecording(diaglog.content, diaglog.ipa, true, i, diaglog.id)">
+                    <img class="image" src="assets/images/icons/record.svg">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="hr" *ngIf="clickContentId === diaglog.id">
+                <div class="active"></div>
+              </div>
+            </div>
+          </ng-template>
+
+        </ng-container>
+      </div>
+    </div>
+    <div *ngIf="!stepOk" style="color: #576168;">
+      尚有未完成之語句
+    </div>
+  </div>
+
+
+  <app-button [isFilled]="false" [isWidthFull]="false" [hidden]="!stepOk" (click)="restart()">
+    <ng-container *ngFor="let language of languages">
+      <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+    </ng-container>
+  </app-button>
+  <br>
+  <app-button [isFilled]="true" [isWidthFull]="false" [hidden]="!stepOk" (click)="openDialog()">
+    <ng-container *ngFor="let language of languages">
+      <span *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</span>
+    </ng-container>
+  </app-button>
+
+</div>

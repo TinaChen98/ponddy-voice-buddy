@@ -1,0 +1,127 @@
+<!-- <div class="result-wrapper">
+  <div class="summary-wrapper">
+    <div class="description-wrapper">
+      <h1>Simple Scoring Index</h1>
+
+      <p>So far so good! You get {{asrResponse?.data?.score| number: '0.0-0' }}/100 on Ponddy's simple scoring index.</p>
+
+      <div class="scale-wrapper">
+        <div class="scale-group">
+          <div class="bad-icon icon"></div> 0-49
+        </div>
+        <div class="scale-group">
+          <div class="medium-icon icon"></div> 50-89
+        </div>
+        <div class="scale-group">
+          <div class="good-icon icon"></div> 90-100
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-wrapper">
+      <app-progress-circle
+        *ngIf="asrResponse"
+        [progress]="asrResponse?.data?.score"
+        [color]="asrResponse?.data?.score <= 49 ? '#D64059' : (asrResponse?.data?.score <= 89 ? '#F3A024' : '#3B9FBE')">
+        <div class="progress">{{ asrResponse?.data?.score | number: '0.0-0' }}<span class="percent">%</span></div>
+      </app-progress-circle>
+
+      <div class="hint">
+        <div class="icon">
+          <img src="assets/images/icons/diagram.svg" alt="diagram" />
+        </div>
+        <div class="hint-text">Simple scoring</div>
+        <div class="question-mark">
+          <img src="assets/images/icons/question-mark.svg" alt="question-mark" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-review-wrapper">
+    <div class="audio-wrapper">
+      <div class="audio-item ponddy-ai">
+        <div class="logo">
+          <img src="assets/images/icons/ai.svg" alt="ai" />
+        </div>
+        <div class="name">Ponddy AI</div>
+        <div class="button-wrapper">
+          <div class="play-back">
+            <img src="assets/images/icons/play-gray.svg" [hidden]="isAiPlayback" alt="playback" (click)="playAi()" />
+            <img src="assets/images/icons/stop-gray.svg" [hidden]="!isAiPlayback" alt="stop" (click)="stopAi()" />
+          </div>
+
+          <div class="pinyins" *ngIf="asrResponse">
+            <div class="pinyin out" *ngFor="let pinyin of asrResponse?.data?.input_text; let i=index">
+              <span [id]="'text3_'+i" >{{ pinyin }}</span>
+              <span [id]="'line3_'+i" class="line tooltip">
+                <div class="tooltiptext">
+                  <div class="tooltip-top">
+                    <div class="title">Connected speech</div>
+                    <div class="beta">Beta</div>
+                  </div>
+                  <div class="text">
+                    Using connected speech is a huge key to making you sound more natural when speaking English. Try to follow the yellow curve and link the sounds of the words when speaking.
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-item user">
+        <div class="logo">
+          <img src="assets/images/icons/human.svg" alt="human" />
+        </div>
+        <div class="name">You</div>
+        <div class="button-wrapper">
+          <div class="play-back">
+            <img src="assets/images/icons/play-gray.svg" [hidden]="isUserPlayback" alt="playback" (click)="playUser()" />
+            <img src="assets/images/icons/stop-gray.svg" [hidden]="!isUserPlayback" alt="stop" (click)="stopUser()" />
+          </div>
+
+          <div class="pinyins" *ngIf="asrResponse">
+            <div
+            *ngFor="let pinyin of asrResponse?.data?.predicted; let i = index;"
+              class="pinyin out"
+              [class.red]="asrResponse?.data?.ins_indices.includes(i) || asrResponse?.data?.del_indices.includes(i) || asrResponse?.data?.sub_indices.includes(i)"
+              [class.blue]="!(asrResponse?.data?.ins_indices.includes(i) || asrResponse?.data?.del_indices.includes(i) || asrResponse?.data?.sub_indices.includes(i))">
+                  <span [id]="'text3y_'+i" >{{ pinyin }}</span>
+                  <span [id]="'line3y_'+i" class="line tooltip">
+                    <div class="tooltiptext">
+                      <div class="tooltip-top">
+                        <div class="title">Connected speech result</div>
+                        <div class="beta">Beta</div>
+                      </div>
+                      <div class="text">
+                        Click "Get Ponddy Voice Score" to get your detail voice scoring result and see if you spoke like a native speaker.
+                      </div>
+                    </div>
+                  </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-text">
+      Legend: <span class="black"> ■ input text</span> <span class="blue"> ■ correct</span>
+      <span class="red"> ■ incorrect</span>
+    </div>
+  </div>
+
+  <div class="submit-wrapper">
+    <app-button *ngIf="asrResponse?.data?.score >= 20" (click)="tryAgain()">
+      Record It Again
+    </app-button>
+
+    <app-button *ngIf="asrResponse?.data?.score >= 20" [isFilled]="true" (click)="getScoringIndex()">
+      Get Ponddy Voice Diagnosis
+    </app-button>
+
+    <app-button *ngIf="asrResponse?.data?.score < 20" [isFilled]="true" (click)="tryAgain()">
+      Try Again
+    </app-button>
+  </div>
+</div> -->

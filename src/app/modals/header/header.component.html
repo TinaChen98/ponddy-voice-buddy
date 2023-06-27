@@ -1,0 +1,98 @@
+<div class="header">
+  <div class="header__logo">
+    <div (click)="goHome()"><img src="assets/images/voice-buddy-logo.svg"></div>
+  </div>
+
+  <div class="header__user">
+    <ng-container *ngIf="userState; else lang">
+      <button mat-button [matMenuTriggerFor]="animals" class="user">
+        <div><img [src]="this.userImage" class="user__img"></div>
+        <div class="user__name">{{this.userName}}</div>
+        <div><img src="assets/images/icon-bottom.svg"></div>
+      </button>
+
+      <mat-menu #animals="matMenu" class="setting">
+        <ng-container *ngFor="let language of languages">
+          <button mat-menu-item *ngIf="language.id === 1 && language.lang === nowLanguage">
+            <div class="user-menu border-b" (click)="changeProfile()">{{ language.text }}</div>
+          </button>
+        </ng-container>
+
+        <button mat-menu-item [matMenuTriggerFor]="language">
+          <div *ngIf="nowLanguage === 'en'" class="user-menu border-b">English</div>
+          <div *ngIf="nowLanguage === 'zh-TW'" class="user-menu border-b">繁體中文</div>
+        </button>
+
+        <ng-container *ngFor="let language of languages">
+          <button mat-menu-item *ngIf="language.id === 2 && language.lang === nowLanguage"  (click)="openPolicy('privacy-policy')">
+            <div class="user-menu border-b">{{ language.text }}</div>
+          </button>
+        </ng-container>
+
+        <ng-container *ngFor="let language of languages">
+          <button mat-menu-item *ngIf="language.id === 3 && language.lang === nowLanguage"  (click)="openPolicy('terms-of-use')">
+            <div class="user-menu border-b">{{ language.text }}</div>
+          </button>
+        </ng-container>
+
+        <ng-container *ngFor="let language of languages">
+          <button mat-menu-item *ngIf="language.id === 4 && language.lang === nowLanguage"  (click)="logout()">
+            <div class="user-menu ">{{ language.text }}</div>
+          </button>
+        </ng-container>
+      </mat-menu>
+
+      <mat-menu #language="matMenu" class="menu-language">
+        <button mat-menu-item class="border-b" (click)="setLanguage('en')">
+          <span class="static-link-tick">
+            <ng-container *ngIf="nowLanguage === 'en'">
+              ✓
+            </ng-container>
+          </span>
+          English
+        </button>
+        <button mat-menu-item (click)="setLanguage('zh-TW')">
+          <span class="static-link-tick">
+            <ng-container *ngIf="nowLanguage === 'zh-TW'">
+              ✓
+            </ng-container>
+          </span>
+          繁體中文
+        </button>
+      </mat-menu>
+    </ng-container>
+
+    <ng-template #lang>
+      <button mat-button [matMenuTriggerFor]="lang" class="user lang">
+        <div><img src="https://ponddy-auth-master.s3.amazonaws.com/static/images/language-web.svg"></div>
+        <div *ngIf="nowLanguage === 'en'" class="user-menu">English</div>
+        <div *ngIf="nowLanguage === 'zh-TW'" class="user-menu">繁體中文</div>
+        <div><img src="assets/images/icon-bottom.svg"></div>
+      </button>
+
+      <mat-menu #lang="matMenu" class="setting">
+        <button mat-menu-item>
+          <div class="user-menu border-b" (click)="setLanguage('en')">
+            <span class="static-link-tick">
+              <ng-container *ngIf="nowLanguage === 'en'">
+                ✓
+              </ng-container>
+            </span>
+            English
+          </div>
+        </button>
+        <button mat-menu-item>
+          <div class="user-menu" (click)="setLanguage('zh-TW')">
+            <span class="static-link-tick">
+              <ng-container *ngIf="nowLanguage === 'zh-TW'">
+                ✓
+              </ng-container>
+            </span>
+            繁體中文
+          </div>
+        </button>
+      </mat-menu>
+    </ng-template>
+  </div>
+
+</div>

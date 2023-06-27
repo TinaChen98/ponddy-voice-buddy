@@ -1,0 +1,44 @@
+.widget-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 780px;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  @media screen and (max-width: 768px) {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+
+  audio {
+    display: none;
+  }
+
+  app-step-container {
+    width: 100%;
+  }
+
+  .version {
+    color: #969CA0;
+    align-self: flex-end;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  .progress-container {
+    margin-bottom: 40px;
+  }
+}
+
+footer {
+  padding-top: 120px;
+  text-align: center;
+
+  a {
+    color: #969CA0;
+    font-size: 13px;
+  }
+}

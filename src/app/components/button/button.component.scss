@@ -1,0 +1,48 @@
+.button-wrapper {
+  background: transparent;
+  border-radius: 20px;
+  border: 2px solid #6ACFED;
+  padding: 8px 25px;
+  color: #3B9FBE;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: fit-content;
+  cursor: pointer;
+  min-width: 160px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.filled {
+    background: #6ACFED;
+    border-color: #6ACFED;
+    color: white;
+  }
+
+  &.disabled {
+    background: #EAEBEC;
+    border-color: #EAEBEC;
+    color: white;
+    cursor: not-allowed;
+  }
+
+  &.stop {
+    background: #EA4B65;
+    color: white;
+    border-color: #EA4B65;
+  }
+
+  &.width-auto {
+    width: auto;
+  }
+
+  &.small-btn {
+    max-width: 60px;
+    padding: 8px 12px;
+    min-width: auto;
+    border-radius: 10px;
+  }
+}

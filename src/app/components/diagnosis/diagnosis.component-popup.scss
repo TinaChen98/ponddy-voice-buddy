@@ -1,0 +1,46 @@
+
+
+::ng-deep.mat-dialog-container {
+  padding: 0;
+  border-radius: 12px;
+  text-align: center;
+
+  h1 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 47px;
+    letter-spacing: 1px;
+    color: #576168;
+    margin: 0;
+    padding: 24px 0 8px 0;
+  }
+
+  .annotation {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
+    color: #576168;
+    padding-bottom: 24px;
+  }
+
+  .description {
+    border-top: 1px solid rgba(45, 57, 66, 0.1);
+    padding: 24px 0;
+    display: flex;
+
+    .table {
+      min-width: 100px;
+      text-align: center;
+      &__title {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 20px;
+        color: #969CA0;
+        padding-bottom: 12px;
+      }
+    }
+  }
+
+}
+

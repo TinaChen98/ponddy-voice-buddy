@@ -1,0 +1,174 @@
+<div class="input-wrapper">
+  <div class="recommended-wrapper">
+    <div class="top">
+      <div class="user-sentences" (click)="openUserDialog()">
+        <div class="user-sentences__icon">
+          <div class="icon">
+            <img src="./assets/images/icons/icon-user-sentences-blue.svg">
+          </div>
+        </div>
+        <div>
+          <ng-container *ngFor="let language of languages">
+            <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+          </ng-container>
+        </div>
+      </div>
+      <ul>
+          <ng-container *ngFor="let language of languages">
+            <li *ngIf="language.id === 2 && language.lang === nowLanguage" class="border-r" [class.active]="type=='ponddy_sentences'" (click)="changeType('ponddy_sentences')">{{ language.text }}</li>
+            <li *ngIf="language.id === 2 && language.lang === nowLanguage && this.customizedStatus" class="border-r" [class.active]="type=='customized_sentences'" (click)="changeType('customized_sentences')">{{title}}</li>
+            <li *ngIf="language.id === 5 && language.lang === nowLanguage && this.dialoguesStatus" class="border-r" [class.active]="type=='dialogues_sentences'" (click)="changeType('dialogues_sentences')">{{language.text}}</li>
+            <li *ngIf="language.id === 3 && language.lang === nowLanguage" [class.active]="type=='pin_sentences'" (click)="changeType('pin_sentences')">{{ language.text }}</li>
+          </ng-container>
+      </ul>
+    </div>
+    <div class="topic" *ngIf="type=='customized_sentences'">
+      <carousel [height]="46" [cellWidth]="90" [margin]="6" [arrows]="false">
+        <div *ngFor="let topic of topics; let j=index" class="carousel-cell">
+          <span class="topic-item" (click)="topicList(j, topic, false)" [class.active]="j===this.activeTopic">{{topic}}</span>
+        </div>
+      </carousel>
+    </div>
+    <div class="topic" *ngIf="type=='dialogues_sentences'">
+      <carousel [height]="46" [cellWidth]="90" [margin]="6" [arrows]="false">
+        <div *ngFor="let dialogue of dialogues; let j=index" class="carousel-cell">
+          <span *ngIf="nowLanguage === 'en'" class="topic-item" (click)="dialoguesList(j, dialogue, false)" [class.active]="j===this.dialogues_activeTopic">{{dialogue.name_en}}</span>
+          <span *ngIf="nowLanguage === 'zh-TW'" class="topic-item" (click)="dialoguesList(j, dialogue, false)" [class.active]="j===this.dialogues_activeTopic">{{dialogue.name_cht}}</span>
+        </div>
+      </carousel>
+    </div>
+
+    <!-- 主題對話 -->
+    <ng-container *ngIf="type === 'dialogues_sentences'">
+      <div class="scroll-block-dialogues dialogues">
+        <ng-container *ngFor="let dialoguesScenario of dialoguesScenarios; let i = index">
+          <div class="dialogues__item" (click)="clickDialoguesScenarios(dialoguesScenario.id)">
+            <div>
+              <img *ngIf="dialoguesScenario.photo != null" [src]="dialoguesScenario.photo">
+              <img *ngIf="dialoguesScenario.photo === null" src="./assets/dialoguesScenario-test.png">
+            </div>
+            <div class="dialogues__item__text">
+              <div>
+                {{dialoguesScenario.name_en}}
+              </div>
+              <div>
+                {{dialoguesScenario.name_cht}}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+
+
+    <div [class.scroll-block-pin]="type === 'pin_sentences'" [class.scroll-block-customized]="type === 'customized_sentences'">
+      <ng-container *ngFor="let recommendedItem of sentences; let i = index">
+        <div class="recommended-item">
+          <ng-container *ngIf="!recommendedItem.is_practice; else practicePin">
+            <div class="pin" [class.active]="recommendedItem.saved" [class.true]="recommendedItem.saved" (click)="pinSentences(recommendedItem.id, recommendedItem.type, recommendedItem.saved, $event)">
+            </div>
+          </ng-container>
+
+          <ng-template #practicePin>
+            <div *ngIf="recommendedItem.type != 'practice_sentences'" class="pin" style="opacity: 0.3; cursor: auto;">
+            </div>
+
+            <div *ngIf="recommendedItem.type === 'practice_sentences'" class="pin" [class.active]="recommendedItem.saved" [class.true]="recommendedItem.saved" (click)="pinSentences(recommendedItem.practice_id, recommendedItem.type, recommendedItem.saved, $event)">
+            </div>
+          </ng-template>
+
+          <ng-container *ngIf="recommendedItem.type!= 'practice_sentences'; else practicePlay;">
+            <ng-container *ngFor="let idsSentence of idsSentences">
+              <div
+                (click)="playPartData(idsSentence.voice, recommendedItem.id)"
+                *ngIf="type != 'pin_sentences' && idsSentence.id === recommendedItem.id && idsSentence.practiced"
+                class="voice-start"
+                [class.voice-stop]="isPartDataback === recommendedItem.id"
+                [style.border-left]="idsSentence.score <= 39 ? '20px solid #D64059' : (idsSentence.score <= 69 ? '20px solid #F3A024' : '20px solid #3B9FBE')"></div>
+              <div *ngIf="idsSentence.id === recommendedItem.id && !idsSentence.practiced && type != 'pin_sentences'" class="voice-start disabled" [class.true]="recommendedItem.saved" [style.border-left]="'20px solid #EAEBEC'"></div>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #practicePlay>
+            <ng-container *ngFor="let idsSentencesPractice of idsSentencesPractices">
+              <div
+                (click)="playPartData(idsSentencesPractice.voice, recommendedItem.id)"
+                *ngIf="type != 'pin_sentences' && idsSentencesPractice.id === recommendedItem.practice_id"
+                class="voice-start"
+                [class.voice-stop]="isPartDataback === recommendedItem.id"
+                [style.border-left]="idsSentencesPractice.score <= 39 ? '20px solid #D64059' : (idsSentencesPractice.score <= 69 ? '20px solid #F3A024' : '20px solid #3B9FBE')"></div>
+              <div *ngIf="idsSentencesPractice.id === recommendedItem.id && !idsSentencesPractice.practiced && type != 'pin_sentences'" class="voice-start disabled" [class.true]="recommendedItem.saved" [style.border-left]="'20px solid #EAEBEC'"></div>
+            </ng-container>
+          </ng-template>
+          <ng-container *ngIf="!recommendedItem.is_practice && recommendedItem.type != 'practice_sentences'; else practiceContent">
+            <div class="text" (click)="setText(recommendedItem.content)">
+              <div class="level" [style.color]="recommendedItem.level_cefr_color">
+                {{recommendedItem.level_cefr_name}} {{recommendedItem.label}}
+              </div>
+              <div>
+                {{recommendedItem.content}}
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #practiceContent>
+            <div class="text" (click)="openDialog(i)">
+              <div class="level" [style.color]="recommendedItem.level_cefr_color || '#576168'">
+                {{ recommendedItem.level_cefr_name }} {{recommendedItem.label}}
+                <span class="btn-practice" [style.background-color]="recommendedItem.level_cefr_color || '#576168'">Practice</span>
+              </div>
+              <div [class.practice]="recommendedItem.type != 'practice_sentences'">
+                {{recommendedItem.content}}
+              </div>
+            </div>
+          </ng-template>
+
+        </div>
+      </ng-container>
+      <ng-container *ngFor="let language of languages">
+        <div *ngIf="type=='ponddy_sentences' && language.id === 4 && language.lang === nowLanguage" class="refresh" (click)="refreshSentences(0, this.type)">
+          <img src="assets/images/icons/refresh.svg" alt="refresh"/>
+          {{ language.text }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="type != 'ponddy_sentences' && paginations.length!=0" class="pagination">
+    <ng-container>
+      <div class="arrow" [class.disable]="this.paginationNow === 0 || this.paginationNow < 10" (click)="paginationClick(type, (this.paginationNow)-10)"> << </div>
+    </ng-container>
+
+    <ng-container>
+      <div class="arrow" [class.disable]="this.paginationNow === 0" (click)="paginationClick(type, (this.paginationNow)-1)"> < </div>
+    </ng-container>
+
+    <ng-container *ngIf="(this.paginationNow) >= 2">
+      <div class="num" (click)="paginationClick(type, 0)">1</div>
+    </ng-container>
+
+    <ng-container *ngIf="(this.paginationNow) >= 3">
+      <div >...</div>
+    </ng-container>
+
+    <ng-container *ngFor="let pagination of paginations" >
+      <div class="num" *ngIf="pagination > (this.paginationNow)-2 && pagination < (this.paginationNow)+2" (click)="paginationClick(type, pagination)" [class.active]="pagination == this.paginationNow">
+        {{ pagination+1 }}
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="(this.paginationNow)+4 <= paginations.length">
+      <div >...</div>
+    </ng-container>
+
+    <ng-container *ngIf="(this.paginationNow)+3 <= paginations.length">
+        <div class="num" (click)="paginationClick(type, paginations[paginations.length-1])">{{ paginations.length }}</div>
+    </ng-container>
+
+    <ng-container>
+      <div class="arrow" [class.disable]="this.paginationNow === paginations.length-1" (click)="paginationClick(type, (this.paginationNow)+1)"> > </div>
+    </ng-container>
+    <ng-container>
+      <div class="arrow" [class.disable]="this.paginationNow >= paginations.length-10" (click)="paginationClick(type, (this.paginationNow)+10)"> >> </div>
+    </ng-container>
+  </div>
+</div>

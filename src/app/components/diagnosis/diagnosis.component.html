@@ -1,0 +1,208 @@
+<div class="diagnosis-wrapper">
+  <div class="input-text-wrapper">
+    <div class="input-text">
+      <div class="pin" [class.active]="this.savedState" (click)="pinSentences()"></div>
+      <div>
+        <span>{{ currentSentence?.content }}</span>
+      </div>
+    </div>
+
+    <div class="button" (click)="reset()"></div>
+  </div>
+
+  <div class="title-wrapper">
+    <h1>Ponddy Voice Diagnosis</h1>
+  </div>
+
+  <div class="gop-and-tone-wrapper">
+    <div class="diagrams-wrapper">
+      <div class="diagram-item">
+        <app-progress-circle [progress]="asrResponse?.gop.score_gop" [color]="asrResponse?.gop.score_gop <= 39 ? '#D64059' : (asrResponse?.gop.score_gop <= 69 ? '#F3A024' : '#3B9FBE')">
+          <div class="progress">{{ asrResponse?.gop.score_gop }}<span class="percent">%</span></div>
+        </app-progress-circle>
+        <div class="hint">
+          <div class="icon">
+            <img src="assets/images/icons/diagram.svg" alt="gop" />
+          </div>
+          <div class="hint-text">
+            <ng-container *ngFor="let language of languages">
+              <span *ngIf="language.id === 1 && language.lang === nowLanguage">{{ language.text }}</span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-item">
+        <img *ngIf="asrResponse?.fluency.level === 'low'" src="assets/images/icons/fluency/low.svg" alt="low fluency" />
+        <img *ngIf="asrResponse?.fluency.level === 'intermediate'" src="assets/images/icons/fluency/intermediate.svg" alt="intermediate fluency" />
+        <img *ngIf="asrResponse?.fluency.level === 'high'" src="assets/images/icons/fluency/high.svg" alt="high fluency" />
+        <img *ngIf="asrResponse?.fluency.level === 'native'" src="assets/images/icons/fluency/native.svg" alt="native fluency" />
+        <div class="hint">
+          <div class="icon">
+            <img src="assets/images/icons/fluency-level.svg" alt="fluency-level" />
+          </div>
+          <div class="hint-text">
+            <ng-container *ngFor="let language of languages">
+              <span *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</span>
+            </ng-container></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <app-button (click)="generateVoice()" style="display: inline-block;">
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 13 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </app-button>
+  </div>
+
+  <div class="result-review-wrapper">
+    <div class="audio-wrapper">
+      <div class="audio-item ponddy-ai">
+        <div class="logo">
+          <img src="assets/images/icons/ai.svg" alt="ai" />
+        </div>
+        <div class="name">Ponddy AI</div>
+        <div class="button-wrapper">
+          <div class="play-back">
+            <img src="assets/images/icons/play-gray.svg" [hidden]="isAiPlayback" alt="playback" (click)="playAi()" />
+            <img src="assets/images/icons/stop-gray.svg" [hidden]="!isAiPlayback" alt="stop" (click)="stopAi()" />
+          </div>
+
+          <div class="pinyins" *ngIf="asrResponse">
+            <div class="pinyin out">
+              <span>{{ currentSentence?.content }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-item user">
+        <div class="logo">
+          <img src="assets/images/icons/human.svg" alt="human" />
+        </div>
+        <div class="name">You</div>
+        <div class="button-wrapper">
+          <div class="play-back">
+            <img src="assets/images/icons/play-gray.svg" [hidden]="isUserPlayback" alt="playback" (click)="playUser()" />
+            <img src="assets/images/icons/stop-gray.svg" [hidden]="!isUserPlayback" alt="stop" (click)="stopUser()" />
+          </div>
+
+          <div class="pinyins" *ngIf="asrResponse?.gop.table_structure.data">
+            <div
+              *ngFor="let row of asrResponse?.gop.table_structure.data;let i = index"
+              class="pinyin out web" [style.color]="row[2].color ? row[2].color : 'inherit'">
+                <span [id]="'text4y_'+i" >{{ row[0].value | lowercase }}</span>
+            </div>
+
+            <button *ngFor="let row of asrResponse?.gop.table_structure.data;let i = index"
+            class="pinyin out mobile" [style.color]="row[2].color ? row[2].color : 'inherit'" mat-button (click)="openDialog(row, i)">
+              {{ row[0].value | lowercase }}
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-text">
+
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 3 && language.lang === nowLanguage">{{ language.text }}: </span>
+        <span class="black" *ngIf="language.id === 4 && language.lang === nowLanguage"> ■ {{ language.text }}</span>
+        <span class="blue" *ngIf="language.id === 5 && language.lang === nowLanguage"> ■ {{ language.text }}</span>
+        <span class="orange" *ngIf="language.id === 6 && language.lang === nowLanguage"> ■ {{ language.text }}</span>
+        <span class="red" *ngIf="language.id === 7 && language.lang === nowLanguage"> ■ {{ language.text }}</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- mobile -->
+
+
+  <!-- web -->
+  <div class="analysis-table-wrapper">
+    <table *ngIf="asrResponse">
+      <thead *ngIf="asrResponse.gop.table_structure.header">
+        <tr>
+          <td *ngFor="let cellTitle of asrResponse.gop.table_structure.header">
+            {{ cellTitle }}
+          </td>
+        </tr>
+      </thead>
+      <tbody *ngIf="asrResponse.gop.table_structure.data">
+      <tr *ngFor="let row of asrResponse.gop.table_structure.data;let rowIndex = index;">
+        <td class="chinese" [style.color]="row[0]?.color ? row[0]?.color : 'inherit'">
+          <div *ngIf="row[0]?.type==='text'"> {{ row[0]?.value }}</div>
+          <div class="play-back" *ngIf="row[0]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 0)"
+                 (click)="playPartData(row[0]?.value,''+rowIndex+0)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+        <td [style.color]="row[1]?.color ? row[1]?.color : 'inherit'">
+          <div *ngIf="row[1]?.type==='text'">{{ row[1]?.value }}</div>
+          <div class="play-back" *ngIf="row[1]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 1)"
+                 (click)="playPartData(row[1]?.value,''+rowIndex+1)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+        <td class="chinese" [style.color]="row[2]?.color ? row[2]?.color : 'inherit'">
+          <div *ngIf="row[2]?.type==='text'">{{ row[2]?.value }}</div>
+          <div class="play-back" *ngIf="row[2]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 2)"
+                 (click)="playPartData(row[2]?.value,''+rowIndex+2)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+        <td [style.color]="row[3]?.color ? row[3]?.color : 'inherit'">
+          <div *ngIf="row[3]?.type==='text'">{{ row[3]?.value }}</div>
+          <div class="play-back" *ngIf="row[3]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 3)"
+                 (click)="playPartData(row[3]?.value,''+rowIndex+3)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+        <td [style.color]="row[4]?.color ? row[4]?.color : 'inherit'">
+          <div *ngIf="row[4]?.type==='text'">{{ row[4]?.value }}</div>
+          <div class="play-back" *ngIf="row[4]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 4)"
+                 (click)="playPartData(row[4]?.value,''+rowIndex+4)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+        <td [style.color]="row[5]?.color ? row[5]?.color : 'inherit'">
+          <div *ngIf="row[5]?.type==='text'">{{ row[5]?.value }}</div>
+          <div class="play-back" *ngIf="row[5]?.type === 'voice'">
+            <img src="assets/images/icons/play-gray.svg" alt="playback" [hidden]="isPartDataback===('' + rowIndex + 5)"
+                 (click)="playPartData(row[5]?.value,''+rowIndex+5)"/>
+            <img src="assets/images/icons/stop-gray.svg" alt="stop" [hidden]="!isPartDataback"
+                 (click)="stopPartData()"/>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="submit-wrapper">
+    <app-button (click)="generateVoice()" style="margin-right: 20px">
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 13 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </app-button>
+    <app-button [isFilled]="true" (click)="tryAnother()">
+      <ng-container *ngFor="let language of languages">
+        <span *ngIf="language.id === 14 && language.lang === nowLanguage">{{ language.text }}</span>
+      </ng-container>
+    </app-button>
+  </div>
+</div>

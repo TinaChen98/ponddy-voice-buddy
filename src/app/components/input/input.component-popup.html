@@ -1,0 +1,37 @@
+<div class="practice">
+  <!-- <h1 mat-dialog-title>
+
+  </h1> -->
+
+  <button mat-button mat-dialog-close class="close">x</button>
+
+  <div class="level" [style.color]="data.level_cefr_color || '#576168'">
+    {{ data.level_cefr_name }} {{ data.label }}
+  </div>
+
+  <div mat-dialog-content>
+    <div class="top">
+      <div class="del-text" (click)="delText()">x</div>
+      <div>
+        <textarea id="textContent" [ngModel]="text" (ngModelChange)="generateSentenceByText($event)"
+              onfocus="this.placeholder = ''"
+              onblur="this.placeholder = defaultPlaceholder"
+              [placeholder]="defaultPlaceholder"
+              rows="5">
+        </textarea>
+      </div>
+      <ng-container *ngIf="this.data.type === 'customized_sentences'">
+        <div class="annotation">
+          {{ this.data.content }}
+        </div>
+      </ng-container>
+      <div class="btn-b">
+        <app-button [isFilled]="true" [class.disable]="!text||!isTextVaild" [isSmallBtn]="true" [isDisabled]="!text||!isTextVaild" (click)="generateVoice()">
+          <ng-container *ngFor="let language of languages">
+            <span *ngIf="language.id === 2 && language.lang === nowLanguage">{{ language.text }}</span>
+          </ng-container>
+        </app-button>
+      </div>
+    </div>
+  </div>
+</div>
