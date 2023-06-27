@@ -43,7 +43,7 @@
     &__button {
       cursor: pointer;
       padding: 6px;
-      background-image: url('/assets/images/icons/gohome.svg');
+      background-image: url('/ponddy-voice-buddy/assets/images/icons/gohome.svg');
       display: flex;
       justify-content: center;
       align-items: center;
@@ -53,7 +53,7 @@
       background-position: center;
       background-size: contain;
       &:hover {
-        background-image: url('/assets/images/icons/gohome-hover.svg');
+        background-image: url('/ponddy-voice-buddy/assets/images/icons/gohome-hover.svg');
       }
       @media screen and (max-width: 768px) {
         min-height: 30px;

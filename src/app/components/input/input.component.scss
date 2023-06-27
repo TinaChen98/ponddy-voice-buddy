@@ -41,7 +41,7 @@
           width: 24px;
           height: 24px;
           padding-right: 4px;
-          // background-image: url(/assets/images/icons/icon-user-sentences-blue.svg);
+          // background-image: url(/ponddy-voice-buddy/assets/images/icons/icon-user-sentences-blue.svg);
           background-repeat: no-repeat;
           background-position: center;
 
@@ -54,7 +54,7 @@
       // &:hover {
       //   background-color: #6ACFED;
       //   color: white;
-      //   // background-image: url(/assets/images/icons/icon-user-sentences-white.svg);
+      //   // background-image: url(/ponddy-voice-buddy/assets/images/icons/icon-user-sentences-white.svg);
       //   background-repeat: no-repeat;
       //   background-position: 12px;
       //   background-size: 20px;
@@ -144,15 +144,15 @@
         width: 24px;
         height: 24px;
         padding-right: 8px;
-        background-image: url("/assets/images/icons/icon_pin.svg");
+        background-image: url("/ponddy-voice-buddy/assets/images/icons/icon_pin.svg");
         background-repeat: no-repeat;
         background-size: 24px;
 
         &.active {
-          background-image: url("/assets/images/icons/icon_pin_active.svg");
+          background-image: url("/ponddy-voice-buddy/assets/images/icons/icon_pin_active.svg");
         }
         &.active-saved {
-          background-image: url("/assets/images/icons/icon_pin_active.svg");
+          background-image: url("/ponddy-voice-buddy/assets/images/icons/icon_pin_active.svg");
         }
       }
 
